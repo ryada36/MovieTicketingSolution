@@ -1,2 +1,2 @@
 # MovieTicketingSolution
-A portal for online movie ticket booking
+A portal for online movie ticket booking.
