@@ -1,0 +1,69 @@
+.movie_content_wrapper{
+    margin: 0 -10px;
+}
+
+.booking_meta_wrapper{
+    display: flex;
+    padding: 0 20px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid gainsboro;
+    font-size: 0.8em;
+}
+
+.date_select>ul{
+    list-style: none;
+    padding: 0;
+    float: left;
+}
+.date_select>ul>li{
+    float: left;
+    text-align: center;
+    margin-right: 20px;
+    cursor:pointer;
+    width:50px;
+}
+.date_select>ul>li>.date{
+    padding:5px;
+}
+
+.date_select>ul>li>div.selected{
+    background-color: darkseagreen;
+    color: white;
+    border-radius: 7px;
+}
+
+.shows_wrapper{
+    background-color: #f2f2f2;
+    padding: 0 20px;
+    padding-top: 10px;
+}
+.theater{
+    padding: 20px;
+    display: flex;
+    background-color: white;
+}
+.theater_part{
+    width:220px;
+    max-width: 30%;
+}
+.shows{
+    margin-left: 30px;
+}
+.shows>ul{
+    padding: 0;
+    list-style: none;
+    margin: 0;
+    float:left;
+}
+.shows>ul>li{
+    float: left;
+    margin-right: 20px;
+    border: 1px solid gainsboro;
+    padding: 10px;
+    border-radius: 7px;
+    color: deepskyblue;
+    cursor: pointer
+}
+.shows>ul>li:hover{
+    color:orange;
+}

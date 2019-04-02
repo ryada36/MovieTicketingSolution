@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+body{
+    margin: 0;
+    height:100%;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-size:16px
+}
+
+a{
+    text-decoration: none;
+}
+
+.movie .mat-grid-tile .mat-figure{
+    justify-content: flex-start;
+}
+
+.movie_description .mat-tab-group{
+    width:800px;
+    max-width: 100%;
+}
+.movie_description .mat-grid-tile .mat-figure{
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.movie_description .mat-tab-header{
+    margin-bottom: 30px;
+}

@@ -1,0 +1,19 @@
+a {
+    text-decoration: none;
+    color: white;
+}
+ 
+a:hover, a:active{
+    color: lightgray;
+}
+.navigation-items {
+    font-size: 0.7em;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+.logo img{
+    height:50px;
+    vertical-align: bottom;
+}

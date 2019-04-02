@@ -1,0 +1,10 @@
+.sign_in_form {
+    display: flex;
+    flex-direction: column;
+    width:450px;
+    max-width:100%;
+  }
+  
+  .sign_in_form > * {
+    width: 100%;
+  }

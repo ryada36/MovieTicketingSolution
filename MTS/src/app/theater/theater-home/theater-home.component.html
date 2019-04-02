@@ -1,0 +1,75 @@
+<div class="hero_wrapper">
+  
+</div>
+<div class="movie_content_wrapper mat-typography">
+  <div class="booking_meta_wrapper">
+    <div class="date_select">
+      <ul class="dates">
+        <li>
+          <div class="date" [ngClass]="{'selected':selectedDate==1}" >
+            <div class="day" (click)="displayShows($event)">01</div>
+            <div class="weakday">
+              TODAY
+            </div>
+          </div>
+        </li>
+        <li>
+            <div class="date " [ngClass]="{'selected':selectedDate==2}" >
+                <div class="day" (click)="displayShows($event)">02</div>
+                <div class="weakday">
+                  TOM
+                </div>
+              </div>
+        </li>
+        <li>
+            <div class="date " [ngClass]="{'selected':selectedDate==3}" >
+                <div class="day" (click)="displayShows($event)">03</div>
+                <div class="weakday">
+                  WED
+                </div>
+              </div>
+        </li>
+        <li>
+            <div class="date " [ngClass]="{'selected':selectedDate==4}" >
+                <div class="day" (click)="displayShows($event)">04</div>
+                <div class="weakday">
+                  THU
+                </div>
+              </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="shows_Wrapper">
+    <div class="theater">
+      <div class="theater_part">
+        <span class="mat-h3">Great India Place</span>
+      </div>
+      <div class="shows">
+        <ul class="showList">
+          <li (click)="showBookingFlow()">
+             <span class="show">5:45 pm</span>   
+          </li>
+          <li (click)="showBookingFlow()">
+              <span class="show">9:45 pm</span>   
+           </li>
+        </ul>
+      </div>
+    </div>
+    <div class="theater">
+        <div class="theater_part">
+          <span class="mat-h3">Wave Cinemas</span>
+        </div>
+        <div class="shows">
+          <ul class="showList">
+            <li (click)="showBookingFlow()">
+               <span class="show">5:45 pm</span>   
+            </li>
+            <li (click)="showBookingFlow()">
+                <span class="show">9:45 pm</span>   
+             </li>
+          </ul>
+        </div>
+      </div>
+  </div>
+</div>
