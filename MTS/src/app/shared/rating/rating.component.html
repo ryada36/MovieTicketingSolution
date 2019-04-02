@@ -1,0 +1,14 @@
+<div class="rating_wrapper mat-display">
+  <fieldset class="rating">
+    <input type="radio" [name]="displayName" value="5" [checked]="displayRating=='5'">
+    <label title="Rocks!" (click)='onClick(5)'>5 stars</label>
+    <input type="radio" [name]="displayName" value="4" [checked]="displayRating=='4'">
+    <label title="Rocks!" (click)='onClick(4)'>4 stars</label>
+    <input type="radio" [name]="displayName" value="3" [checked]="displayRating=='3'">
+    <label title="Rocks!" (click)='onClick(3)'>3 stars</label>
+    <input type="radio" [name]="displayName" value="2" [checked]="displayRating=='2'">
+    <label title="Rocks!" (click)='onClick(2)'>2 stars</label>
+    <input type="radio" [name]="displayName" value="1" [checked]="displayRating=='1'">
+    <label title="Rocks!" (click)='onClick(1)'>1 star</label>
+  </fieldset>
+</div>

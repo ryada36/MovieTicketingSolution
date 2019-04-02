@@ -21,6 +21,7 @@ import { MovieDetailComponent } from './movies/movie-detail/movie-detail.compone
 import { MovieHeroSectionComponent } from './movies/movie-hero-section/movie-hero-section.component';
 import { MovieSummaryComponent } from './movies/movie-summary/movie-summary.component';
 import { RegisterComponent } from './overlays/register/register.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { RegisterComponent } from './overlays/register/register.component';
     MaterialModule,
     FlexLayoutModule,
     RouterModule.forRoot(routes),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    SharedModule
   ],
   providers: [],
   entryComponents: [SigninComponent, RegisterComponent],

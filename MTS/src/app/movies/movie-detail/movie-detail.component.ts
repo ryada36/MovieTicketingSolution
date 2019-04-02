@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class MovieDetailComponent implements OnInit {
 
+  currentRating = '3';
   constructor(private router: Router) { }
 
   ngOnInit() {
@@ -16,6 +17,9 @@ export class MovieDetailComponent implements OnInit {
   goToTheaters(){
     console.log('go to theater landing page');
     this.router.navigateByUrl('/theater');
+  }
+  setNewRating(val){
+    this.currentRating = val;
   }
 
 }

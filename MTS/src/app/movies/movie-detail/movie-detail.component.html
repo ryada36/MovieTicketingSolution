@@ -24,9 +24,10 @@
     <div class="rating">
       <div class="highlight">
         <!-- need star / via directive-->
+        <app-rating [name]="'movie'" [rating]="currentRating" (setRating) = "setNewRating($event)"></app-rating>
       </div>
       <div class="meta muted">
-        <span>CRITICS RATING</span>
+        <span>USER RATING</span>
       </div>
     </div>
 
