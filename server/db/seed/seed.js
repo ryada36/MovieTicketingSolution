@@ -44,7 +44,7 @@ const show = {
     _id : showId,
     movieId : movieId,
     theaterId : theaterId,
-    startTime : "2:00 PM",
+    startTime : new Date("2019-04-10T14:30:00+05:30"),
     price : 200,
     totalSeats : 100
 }
