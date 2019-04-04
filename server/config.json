@@ -1,0 +1,10 @@
+{
+    "development": {
+        "MONGODB_URI": "mongodb://localhost:27017/mts",
+        "SECRET": "secrethere"
+    },
+    "test": {
+        "MONGODB_URI": "mongodb://localhost:27017/mts",
+        "SECRET": "secrethere"
+    }
+}
