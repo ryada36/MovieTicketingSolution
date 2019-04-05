@@ -3,25 +3,41 @@
   <div class="button_contianer">
     <button mat-raised-button color="primary">
       <mat-icon>input</mat-icon>
-      <span>  connect with facebook</span>
+      <span> connect with facebook</span>
     </button>
   </div>
 </div>
 <div class="sign_in_form">
-  <p class="">Don't have an account? <a href="" class=""  (click)="loadSignUp($event)">Sign Up</a>
-    <br>
-    Become a Seller with us <a href=""  (click)="loadSignUp($event)">Register as a seller</a>
+  <p class="">
+    Don't have an account?
+    <a href="" class="" (click)="loadSignUp($event)">Sign Up</a>
+    <br />
+    Become a Seller with us
+    <a href="" (click)="loadSignUp($event)">Register as a seller</a>
   </p>
-
-  <mat-form-field>
-    <input type="text" matInput placeholder="email">
-  </mat-form-field> 
-  <mat-form-field>
-      <input type="password" matInput placeholder="password">
-    </mat-form-field> 
+  <!-- login form -->
+  <form [formGroup]="loginForm">
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        placeholder="email"
+        formControlName="email"
+        autocomplete="off"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="password"
+        matInput
+        placeholder="password"
+        formControlName="password"
+      />
+    </mat-form-field>
+  </form>
 </div>
 
 <div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cancel</button>
-    <button mat-raised-button cdkFocusInitial>Submit</button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button cdkFocusInitial (click)="login()">Submit</button>
 </div>
