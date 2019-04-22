@@ -1,6 +1,7 @@
 const express = require("express");
+const cors = require("cors");
 const bodyParser = require("body-parser");
-// const multer = require('multer')
+const webpush = require("web-push");
 const { ObjectID } = require("mongodb");
 const _ = require("lodash");
 
@@ -12,12 +13,26 @@ const { Movie } = require("./db/models/movie");
 const { Theater } = require("./db/models/theaters");
 const { Show } = require("./db/models/show");
 const { Roles } = require("./db/models/roles");
+const {
+  NotificationSubscriber
+} = require("./db/models/notificationSubscriber");
 const { authenticate } = require("./middleware/authenticate");
 const { upload } = require("./mutiUpload");
 
 const app = express();
 const port = process.env.PORT || 3200;
 
+const vapidKeys = {
+  publicKey:
+    "BK7VdPIvpsDteH-FKOrMGWe3Yp4zWpUFwVMQPweQevIoVZlx1QREo-0pYRYyB3jv1T85mwKJjS7JyNRRb5fSpK8",
+  privateKey: "CMqb0bprYaQo0uAzi8ShGrnDJBE83j0CTX_q483luPc"
+};
+
+app.use(
+  cors({
+    exposedHeaders: ["Authorization"]
+  })
+);
 app.use(express.static(__dirname + "/public/"));
 app.use(bodyParser.json());
 app.use(
@@ -25,24 +40,87 @@ app.use(
     extended: true
   })
 );
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
-
-/** ===================== User Authentication Routes ======================= */
 
 app.get("/test", (req, res) => {
   res.send({ test: "ok" });
 });
 
+/** ========================= Notification Subscription Routes ================= */
+
+webpush.setVapidDetails(
+  "mailto:example@domain.com",
+  vapidKeys.publicKey,
+  vapidKeys.privateKey
+);
+
+app.post("/mts/subscriber", (req, res) => {
+  var body = req.body;
+  var subscriber = new NotificationSubscriber({ subscriber: body });
+  subscriber
+    .save()
+    .then(sub => {
+      return res.send(sub);
+    })
+    .catch(err => res.status(500).send(err));
+});
+
+app.get("/mts/notification/:title", async (req, res) => {
+  const title = req.title;
+  const notificationPayload = {
+    notification: {
+      title: "tested here with love",
+      body: "Newsletter Available!",
+      icon: "assets/main-page-logo-small-hat.png",
+      vibrate: [100, 50, 100],
+      data: {
+        dateOfArrival: Date.now(),
+        primaryKey: 1
+      },
+      actions: [
+        {
+          action: "explore",
+          title: "Go to the site"
+        }
+      ]
+    }
+  };
+  // console.log(JSON.stringify(notificationPayload));
+  const allSubscriptions = await NotificationSubscriber.find({});
+
+  const option = {
+    proxy: "http://bsez-s400.hclt.corp.hcl.in:8080"
+  };
+
+  Promise.all(
+    allSubscriptions.map(sub => {
+      console.log("here is your sub", sub.subscriber);
+      return webpush
+        .sendNotification(
+          sub.subscriber,
+          JSON.stringify(notificationPayload),
+          option
+        )
+        .then(data => {
+          console.log(data);
+        })
+        .catch(err => {
+          console.error("Error Sending notification ", err);
+        });
+    })
+  )
+    .then(() =>
+      res.status(200).json({ message: "Newsletter sent successfully." })
+    )
+    .catch(err => {
+      res.sendStatus(500);
+    });
+});
+
+/** ===================== User Authentication Routes ======================= */
+
 //POST /users
 app.post("/auth/register", (req, res) => {
-  var body = _.pick(req.body, ["email", "password", "name", "role"]);
+  var body = _.pick(req.body.user, ["email", "password", "name", "role"]);
   if (!body.role) {
     body.role = "User";
   } else {
@@ -59,7 +137,7 @@ app.post("/auth/register", (req, res) => {
       return user.generateAuthToken();
     })
     .then(token => {
-      res.header("x-auth", token).send(user);
+      res.header("authorization", "Bearer " + token).send(user);
     })
     .catch(e => {
       res.status(400).send(e);
@@ -89,7 +167,7 @@ app.post("/auth/login", (req, res) => {
 });
 
 //DELETE /users/me/token
-app.delete("/auth/me/token", authenticate, (req, res) => {
+app.delete("/auth/me/:token", authenticate, (req, res) => {
   req.user
     .removeToken(req.token)
     .then(() => {
