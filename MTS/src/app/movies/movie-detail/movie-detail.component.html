@@ -4,7 +4,9 @@
 
 <div class="hero_wrapper">
   <!-- keeping this part as a separate component so that to have it plugin/play-->
-  <app-movie-hero-section></app-movie-hero-section>
+  <app-movie-hero-section
+    [selectedMovie]="selectedMovie"
+  ></app-movie-hero-section>
 </div>
 
 <!-- movie detail based on grid / not from material , as i want to control the look and feel-->
@@ -13,18 +15,21 @@
   <div class="movie_meta_wrapper">
     <div class="likes">
       <div class="highlight">
-          <mat-icon color="warn">favorite</mat-icon>
-          <span>82%</span>
+        <mat-icon color="warn">favorite</mat-icon>
+        <span>82%</span>
       </div>
       <div class="meta muted">
         <span>9,071 votes</span>
       </div>
-      
     </div>
     <div class="rating">
       <div class="highlight">
         <!-- need star / via directive-->
-        <app-rating [name]="'movie'" [rating]="currentRating" (setRating) = "setNewRating($event)"></app-rating>
+        <app-rating
+          [name]="'movie'"
+          [rating]="currentRating"
+          (setRating)="setNewRating($event)"
+        ></app-rating>
       </div>
       <div class="meta muted">
         <span>USER RATING</span>
@@ -32,31 +37,29 @@
     </div>
 
     <div class="booking">
-      <button mat-raised-button  color="primary" (click)="goToTheaters()">Book Tickets</button>
+      <button mat-raised-button color="primary" (click)="goToTheaters()">
+        Book Tickets
+      </button>
     </div>
-
   </div>
   <div class="movie_description">
     <!-- may be have tab based on menu from angular material-->
-    <mat-grid-list md-row-height="fit" cols="4" >
+    <mat-grid-list rowHeight="fit" cols="6" [style.height]="'600px'">
       <mat-grid-tile [colspan]="1"></mat-grid-tile>
-      <mat-grid-tile [colspan]="2">
-
-
+      <mat-grid-tile [colspan]="4">
         <mat-tab-group dynamicHeight>
-            <mat-tab label="Summary" >
-              <app-movie-summary></app-movie-summary>
-            </mat-tab>
-            <mat-tab label="User Reviews" >
-              TODO : Implement reviewing System
-            </mat-tab>
-            <mat-tab label="Critic Reviews" >
-                <app-movie-summary></app-movie-summary>
-            </mat-tab>
-          </mat-tab-group>
+          <mat-tab label="Summary">
+            <app-movie-summary></app-movie-summary>
+          </mat-tab>
+          <mat-tab label="User Reviews">
+            TODO : Implement reviewing System
+          </mat-tab>
+          <mat-tab label="Critic Reviews">
+            TODO : Implement critic reviews
+          </mat-tab>
+        </mat-tab-group>
       </mat-grid-tile>
       <mat-grid-tile [colspan]="1"></mat-grid-tile>
     </mat-grid-list>
-    
   </div>
 </div>

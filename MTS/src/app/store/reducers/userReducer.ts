@@ -1,11 +1,17 @@
 // import { Action } from '@ngrx/store';
-import { USER_LOGIN_COMPLETE, USER_LOGIN_START } from "./../actioTypes";
+import {
+  USER_LOGIN_COMPLETE,
+  USER_LOGIN_START,
+  USER_LOGOUT_SUCCESSFULL,
+  USER_REGISTER_SUCCESSFULL
+} from "./../actioTypes";
 import { IUser } from "./index";
 
 const initialState = {
-  name: "DASd",
+  name: "",
   role: "",
-  token: ""
+  authToken: "",
+  tokens: []
 };
 
 export function userReducer(state: IUser = initialState, action: any) {
@@ -14,6 +20,10 @@ export function userReducer(state: IUser = initialState, action: any) {
       return state;
     case USER_LOGIN_COMPLETE:
       return Object.assign({}, state, action.payload);
+    case USER_LOGOUT_SUCCESSFULL:
+      return {};
+    case USER_REGISTER_SUCCESSFULL:
+      return Object.assign({}, state, ...action.payload.user);
     default:
       return state;
   }

@@ -1,21 +1,52 @@
-<div class="sign_in_wrapper">
-  <h1 mat-dialog-title>Register</h1>
-</div>
-<div class="sign_in_form">
-  <mat-form-field>
-    <input type="name" matInput placeholder="name" />
-  </mat-form-field>
-  <mat-form-field>
-    <input type="email" matInput placeholder="email" autocomplete="off" />
-  </mat-form-field>
-  <mat-form-field>
-    <input type="password" matInput placeholder="password" />
-  </mat-form-field>
-  <mat-form-field>
-    <input type="password" matInput placeholder="confirm password" />
-  </mat-form-field>
-</div>
+<form [formGroup]="registerForm">
+  <div class="sign_in_wrapper">
+    <h1 mat-dialog-title>Register</h1>
+  </div>
+  <div class="sign_in_form">
+    <mat-form-field>
+      <input
+        type="name"
+        matInput
+        placeholder="name"
+        formControlName="name"
+        autocomplete="off"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="email"
+        matInput
+        placeholder="email"
+        formControlName="email"
+        autocomplete="off"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="password"
+        matInput
+        placeholder="password"
+        formControlName="password"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="password"
+        matInput
+        placeholder="confirm password"
+        formControlName="confirmPassword"
+      />
+    </mat-form-field>
+  </div>
 
-<div mat-dialog-actions>
-  <button mat-raised-button cdkFocusInitial>Submit</button>
-</div>
+  <div mat-dialog-actions>
+    <button
+      mat-raised-button
+      color="primary"
+      cdkFocusInitial
+      (click)="register()"
+    >
+      Submit
+    </button>
+  </div>
+</form>

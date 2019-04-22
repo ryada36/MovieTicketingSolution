@@ -23,6 +23,8 @@ import { MovieHeroSectionComponent } from "./movies/movie-hero-section/movie-her
 import { MovieSummaryComponent } from "./movies/movie-summary/movie-summary.component";
 import { RegisterComponent } from "./overlays/register/register.component";
 import { SharedModule } from "./shared/shared.module";
+import { ClientAdComponent } from "./client-ad/client-ad.component";
+import { PaidAdComponent } from "./paid-ad/paid-ad.component";
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { SharedModule } from "./shared/shared.module";
     MovieDetailComponent,
     MovieHeroSectionComponent,
     MovieSummaryComponent,
-    RegisterComponent
+    RegisterComponent,
+    ClientAdComponent,
+    PaidAdComponent
   ],
   imports: [
     BrowserModule,
@@ -51,8 +55,19 @@ import { SharedModule } from "./shared/shared.module";
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
-  entryComponents: [SigninComponent, RegisterComponent],
+  providers: [
+    {
+      provide: "VAPID_PUBLIC_KEY",
+      useValue:
+        "BK7VdPIvpsDteH-FKOrMGWe3Yp4zWpUFwVMQPweQevIoVZlx1QREo-0pYRYyB3jv1T85mwKJjS7JyNRRb5fSpK8"
+    }
+  ],
+  entryComponents: [
+    SigninComponent,
+    RegisterComponent,
+    ClientAdComponent,
+    PaidAdComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

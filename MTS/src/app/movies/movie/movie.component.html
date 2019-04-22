@@ -1,18 +1,18 @@
 <mat-card class="movie" (click)="goToDetail()">
-    <img mat-card-image src="/assets/kesari.jpg" alt="">
-    <mat-card-content>
-        <mat-grid-list cols="4" rowHeight="1:1">
-          <mat-grid-tile [colspan]="1">
-            <mat-icon color="warn">favorite</mat-icon>
-          </mat-grid-tile>
-          <mat-grid-tile [colspan]="3" >
-            <div class="detail">
-              <span>Kesari</span>
-            </div>
-            <div class="meta">
-              U | Action | Hindi
-            </div>
-          </mat-grid-tile>
-        </mat-grid-list>
-    </mat-card-content>
+  <img mat-card-image src="{{ moviePosterURL }}" alt="" />
+  <mat-card-content>
+    <mat-grid-list cols="4" rowHeight="1:1">
+      <mat-grid-tile [colspan]="1">
+        <mat-icon color="warn">favorite</mat-icon>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="3">
+        <div class="detail">
+          <span>{{ movie.name }}</span>
+        </div>
+        <div class="meta">
+          U | Action | Hindi
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
 </mat-card>

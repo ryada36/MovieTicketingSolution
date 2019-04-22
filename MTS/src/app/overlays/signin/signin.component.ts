@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { FormControl, FormGroup } from "@angular/forms";
 import { RegisterComponent } from "./../register/register.component";
 import { Store } from "@ngrx/store";
-import { IAppState, IUser } from "./../../store/reducers/";
+import { IAppState } from "./../../store/reducers/";
 
 /** ========= user actions ========== */
 import { userLogin } from "./../../store/actions/userAction";
@@ -31,8 +31,9 @@ export class SigninComponent implements OnInit {
   ngOnInit() {
     this.store
       .select(state => state.user)
-      .subscribe(data => {
-        console.log(data);
+      .subscribe(user => {
+        if (user.authToken) this.dialogRef.close();
+        console.log("User === >", user);
       });
   }
 

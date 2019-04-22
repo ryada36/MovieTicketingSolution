@@ -1,9 +1,12 @@
-<div class="hero_banner" [style.background-image]="'url(/assets/kesari-detail.jpg)'">
+<div
+  class="hero_banner"
+  [style.background-image]="moviePoster ? moviePoster : ''"
+  *ngIf="selectedMovie"
+>
   <div class="overlay">
     <span class="play"></span>
     <div class="movie_content mat-typography">
-
-      <h2 class="movie_title mat-display-2">Kesari</h2>
+      <h2 class="movie_title mat-display-2">{{ selectedMovie.name }}</h2>
       <div class="meta">
         <span class="certification">U/A</span>
         <span class="language">HINDI</span>
@@ -17,8 +20,11 @@
       </div>
       <div class="release meta">
         <span class="date">21 Mar, 2019</span>
-        <span class="duration"> 2 hrs 30 mins</span>
+        <span class="duration"> {{ selectedMovie.duration }}</span>
       </div>
     </div>
   </div>
+</div>
+<div class="loader hero_banner" *ngIf="!selectedMovie">
+  <mat-spinner diameter="50"></mat-spinner>
 </div>

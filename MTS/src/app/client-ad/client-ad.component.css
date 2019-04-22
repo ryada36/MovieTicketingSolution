@@ -1,0 +1,11 @@
+.ad {
+  padding: 10px;
+  color: purple;
+  background-color: lemonchiffon;
+  border: 1px solid purple;
+  border-radius: 4px;
+}
+h2,
+p {
+  margin: 0;
+}

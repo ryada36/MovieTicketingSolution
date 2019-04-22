@@ -1,12 +1,13 @@
-.movie{
-    width:190px;
-    max-width: 100%;
-    float:left;
-    margin-left:20px;
-    cursor: pointer;
+.movie {
+  width: 190px;
+  max-width: 100%;
+  float: left;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
 }
-.movie .meta{
-    padding-left:10px;
-    color: grey;
-    font-size: 0.8em;
+.movie .meta {
+  padding-left: 10px;
+  color: grey;
+  font-size: 0.8em;
 }

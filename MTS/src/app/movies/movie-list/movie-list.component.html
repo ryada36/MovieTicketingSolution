@@ -1,7 +1,11 @@
 <div class="movies_container">
-
   <h3>Movies</h3>
-  <app-movie></app-movie>
+
+  <!-- need to show ads using dynamic components -->
+  <ng-container *ngIf="movieList && movieList.length > 0">
+    <app-movie *ngFor="let movie of movieList" [movie]="movie"></app-movie>
+  </ng-container>
+
   <!-- <mat-grid-list #grid rowHeight="2:1">
       <mat-grid-tile>
           <app-movie></app-movie>

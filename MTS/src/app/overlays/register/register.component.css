@@ -5,5 +5,9 @@
   justify-content: flex-start;
   align-items: flex-start;
   margin-left: 10px;
-  margin-right: 100px;
+  width: 450px;
+  max-width: 100%;
+}
+mat-form-field {
+  width: 100%;
 }
