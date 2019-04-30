@@ -1,5 +1,6 @@
 import {
   USER_LOGIN,
+  USER_SOCIAL_LOGIN,
   USER_LOGIN_COMPLETE,
   USER_LOGIN_START,
   USER_LOGOUT_SUCCESSFULL,
@@ -13,6 +14,9 @@ export function userLoginStart() {
 }
 export function userLogin(email, password) {
   return { type: USER_LOGIN, payload: { email, password } };
+}
+export function userSocialLogin(user) {
+  return { type: USER_SOCIAL_LOGIN, payload: user };
 }
 export function userLoginSuccessfull(user) {
   return { type: USER_LOGIN_COMPLETE, payload: user };

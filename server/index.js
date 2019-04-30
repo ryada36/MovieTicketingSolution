@@ -13,6 +13,8 @@ const { Movie } = require("./db/models/movie");
 const { Theater } = require("./db/models/theaters");
 const { Show } = require("./db/models/show");
 const { Roles } = require("./db/models/roles");
+const { Booking } = require("./db/models/booking");
+
 const {
   NotificationSubscriber
 } = require("./db/models/notificationSubscriber");
@@ -46,7 +48,7 @@ app.get("/test", (req, res) => {
 });
 
 /** ========================= Notification Subscription Routes ================= */
-
+webpush.setGCMAPIKey("AIzaSyDdugI8Gf4ZS3Fi8xYEbY5cQI13OtmIDJM");
 webpush.setVapidDetails(
   "mailto:example@domain.com",
   vapidKeys.publicKey,
@@ -69,19 +71,19 @@ app.get("/mts/notification/:title", async (req, res) => {
   const notificationPayload = {
     notification: {
       title: "tested here with love",
-      body: "Newsletter Available!",
-      icon: "assets/main-page-logo-small-hat.png",
-      vibrate: [100, 50, 100],
-      data: {
-        dateOfArrival: Date.now(),
-        primaryKey: 1
-      },
-      actions: [
-        {
-          action: "explore",
-          title: "Go to the site"
-        }
-      ]
+      body: "Newsletter Available!"
+      // icon: "assets/main-page-logo-small-hat.png",
+      // vibrate: [100, 50, 100],
+      // data: {
+      //   dateOfArrival: Date.now(),
+      //   primaryKey: 1
+      // },
+      // actions: [
+      //   {
+      //     action: "explore",
+      //     title: "Go to the site"
+      //   }
+      // ]
     }
   };
   // console.log(JSON.stringify(notificationPayload));
@@ -166,6 +168,52 @@ app.post("/auth/login", (req, res) => {
     });
 });
 
+//POST /user/login/social
+app.post("/auth/social_login", (req, res) => {
+  var body = _.pick(req.body, ["email", "name", "id", "token"]);
+
+  User.findByEmailId(body.email)
+    .then(user => {
+      if (user) {
+        return user.generateAuthToken().then(token => {
+          var extended = _.extend(
+            { ...user._doc },
+            { socialToken: body.token }
+          );
+          res.header("authorization", "Bearer " + token).send(extended);
+        });
+      } else {
+        // need to register this user
+        var user = new User({
+          name: body.name,
+          password: body.id,
+          email: body.email,
+          role: "social"
+        });
+        user
+          .save()
+          .then(user => {
+            // need to set the role
+            return user.generateAuthToken();
+          })
+          .then(token => {
+            var extended = _.extend(
+              { ...user._doc },
+              { socialToken: body.token }
+            );
+            res.header("authorization", "Bearer " + token).send(extended);
+          })
+          .catch(e => {
+            res.status(400).send(e);
+          });
+      }
+    })
+    .catch(err => {
+      console.error("LOGIN ERR : ", err);
+      res.status(400).send(err);
+    });
+});
+
 //DELETE /users/me/token
 app.delete("/auth/me/:token", authenticate, (req, res) => {
   req.user
@@ -194,6 +242,15 @@ app.get("/movies", (req, res) => {
   })
     .then(movies => {
       res.send({ movies });
+    })
+    .catch(e => res.status(500).send(e));
+});
+
+app.get("/movies/:id", (req, res) => {
+  var id = req.params.id;
+  Movie.findById(id)
+    .then(movie => {
+      res.send(movie);
     })
     .catch(e => res.status(500).send(e));
 });
@@ -259,6 +316,17 @@ app.get("/theaters/:movieName", (req, res) => {
     .catch(e => res.status(500).send(e));
 });
 
+//get all the theaters
+app.get("/theaters", (req, res) => {
+  Theater.find({})
+    .then(theaters => {
+      if (!theaters) return res.status(404).end();
+
+      res.send(theaters);
+    })
+    .catch(e => res.status(500).send(e));
+});
+
 // POST to a theater aka adding new theater curated by theater owner
 app.post("/theaters", authenticate, (req, res) => {
   var userId = req.user._id;
@@ -292,6 +360,17 @@ app.get("/shows/:movieId/:date", (req, res) => {
     .catch(err => res.status(500).send());
 });
 
+// get show by id
+app.get("/shows/:showId", (req, res) => {
+  var showId = req.params.showId;
+  Show.findById(showId)
+    .then(show => {
+      if (!show) return res.status(404).end();
+      res.send(show);
+    })
+    .catch(err => res.status(500).send(err));
+});
+
 // POST adding shows for movie and theater
 app.post("/shows", authenticate, (req, res) => {
   var movieId = req.body.movieId;
@@ -316,4 +395,33 @@ app.post("/shows", authenticate, (req, res) => {
 
 app.listen(port, () => {
   console.log("API server running at ", port);
+});
+
+/** ===========================Payment routes ====================== */
+app.post("/payment", (req, res) => {
+  const body = _.pick(req.body, ["showId", "email", "phone"]);
+
+  var booking = new Booking(body);
+  booking
+    .save()
+    .then(booking => {
+      Show.updateOne(
+        { _id: new ObjectID(body.showId) },
+        {
+          $set: {
+            availableSeats: req.body.availableSeats
+          }
+        }
+      ).then(data => {
+        if (data.ok && data.nModified) {
+          res.send({ success: true, booking: booking });
+        } else {
+          res.send({ success: false, error: "something went wrong" });
+        }
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 });

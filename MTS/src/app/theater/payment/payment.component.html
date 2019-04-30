@@ -1,0 +1,150 @@
+<div class="payment_wrapper">
+  <!--TODO:  using flex i need to show the ticket preview side by side-->
+
+  <mat-horizontal-stepper linear #stepper>
+    <!-- first part of the form-->
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>
+          Share Your Contact Details
+        </ng-template>
+        <mat-form-field appearance="outline">
+          <input
+            autocomplete="off"
+            matInput
+            placeholder="Enter Your Email"
+            type="email"
+            formControlName="emailCtrl"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <input
+            autocomplete="off"
+            matInput
+            placeholder="Enter Your Phone Number"
+            type="tel"
+            formControlName="phoneCtrl"
+            required
+          />
+        </mat-form-field>
+        <div>
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <!-- second part of the form -->
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>
+          Enter Coupon Details
+        </ng-template>
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            placeholder="Enter Number of Tickets"
+            type="number"
+            min="1"
+            formControlName="ticketsCountCtrl"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            placeholder="Enter Discount Coupon"
+            type="text"
+            formControlName="couponCtrl"
+            required
+          />
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <!-- third part of the form-->
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+
+      <div class="ticket_preview" fxLayout="row">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>
+              <h3 class="mat-h3">Booking Summary</h3>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-list role="list">
+              <mat-list-item>
+                <div
+                  fxLayout
+                  fxLayoutGap="30px"
+                  fxFlex="1 1 100%"
+                  fxLayoutAlign="space-between center"
+                >
+                  <div class="title">
+                    Total Seats ( {{ ticketCount ? ticketCount : 0 }} )
+                  </div>
+                  <div class="meta">
+                    {{ ticketCount ? getTotalTicketAmount() : 0 }}
+                  </div>
+                </div>
+              </mat-list-item>
+              <mat-list-item>
+                <div
+                  fxLayout
+                  fxLayoutGap="30px"
+                  fxFlex="1 1 100%"
+                  fxLayoutAlign="space-between center"
+                >
+                  <div class="title">
+                    <span class="mute">Internet Handling Fees</span>
+                  </div>
+                  <div class="meta">
+                    Rs 100
+                  </div>
+                </div>
+              </mat-list-item>
+              <mat-list-item [style.border-top]="'1px dotted grey'">
+                <div
+                  fxLayout
+                  fxLayoutGap="30px"
+                  fxFlex="1 1 100%"
+                  fxLayoutAlign="space-between center"
+                >
+                  <div class="title">
+                    <span class="mute">Sub Total</span>
+                  </div>
+                  <div class="meta">
+                    {{
+                      ticketCount
+                        ? getTotalTicketAmount() + internetHandlingFees
+                        : 0
+                    }}
+                  </div>
+                </div>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="submit_wrapper">
+        <button mat-button matStepperPrevious>Back</button>
+        <button
+          mat-raised-button
+          (click)="bookTicket()"
+          color="primary"
+          disabled="{{ orderSuccessfull }}"
+        >
+          Pay Now
+        </button>
+      </div>
+      <div class="status success" *ngIf="orderSuccessfull">
+        Movie Booked Successfully
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

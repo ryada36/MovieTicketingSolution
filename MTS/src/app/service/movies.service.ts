@@ -13,4 +13,7 @@ export class MoviesService {
   getMovies() {
     return this.http.get(this.getMoviesEndPoint);
   }
+  getSelectedMovie(movieId) {
+    return this.http.get(`${this.getMoviesEndPoint}/${movieId}`);
+  }
 }

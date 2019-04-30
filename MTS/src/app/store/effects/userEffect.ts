@@ -1,6 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from "@ngrx/effects";
-import { USER_LOGIN, USER_LOGOUT, USER_REGISTER } from "./../actioTypes";
+import {
+  USER_LOGIN,
+  USER_LOGOUT,
+  USER_REGISTER,
+  USER_SOCIAL_LOGIN
+} from "./../actioTypes";
 import {
   userLoginSuccessfull,
   userLogoutSuccessfull,
@@ -21,6 +26,22 @@ export class UserEffects {
       this.loginService.logout(action.payload).pipe(
         map(response => userLogoutSuccessfull()),
         catchError(() => of({ type: "USER_LOGOUT_ERROR" }))
+      )
+    )
+  );
+
+  @Effect()
+  loginSocialUser$ = this.actions$.pipe(
+    ofType(USER_SOCIAL_LOGIN),
+    mergeMap((action: any) =>
+      this.loginService.loginSocialUser(action.payload).pipe(
+        map(response =>
+          userLoginSuccessfull({
+            ...response.body,
+            authToken: response.headers.get("authorization")
+          })
+        ),
+        catchError(() => of({ type: "USER_LOGIN_ERROR" }))
       )
     )
   );

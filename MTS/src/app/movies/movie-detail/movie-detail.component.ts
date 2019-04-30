@@ -33,7 +33,7 @@ export class MovieDetailComponent implements OnInit {
     if (!this.selectedMovie) console.log("fetch from server ", this.movieId);
   }
   goToTheaters() {
-    this.router.navigateByUrl("/theater");
+    this.router.navigateByUrl(`/theater/${this.movieId}`);
   }
   setNewRating(val) {
     this.currentRating = val;

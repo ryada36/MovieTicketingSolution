@@ -1,12 +1,17 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import {
+  AuthService,
+  FacebookLoginProvider,
+  GoogleLoginProvider
+} from "angular-6-social-login";
 import { FormControl, FormGroup } from "@angular/forms";
 import { RegisterComponent } from "./../register/register.component";
 import { Store } from "@ngrx/store";
 import { IAppState } from "./../../store/reducers/";
 
 /** ========= user actions ========== */
-import { userLogin } from "./../../store/actions/userAction";
+import { userLogin, userSocialLogin } from "./../../store/actions/userAction";
 
 @Component({
   selector: "app-signin",
@@ -17,6 +22,7 @@ export class SigninComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(
+    private socialAuthService: AuthService,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<SigninComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -35,6 +41,18 @@ export class SigninComponent implements OnInit {
         if (user.authToken) this.dialogRef.close();
         console.log("User === >", user);
       });
+  }
+
+  socialLogin(socialPlatform: string) {
+    let socialPlatformProvider;
+    if (socialPlatform == "facebook") {
+      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+    } else if (socialPlatform == "google") {
+      socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+    }
+    this.socialAuthService.signIn(socialPlatformProvider).then(userData => {
+      this.store.dispatch(userSocialLogin(userData));
+    });
   }
 
   login() {

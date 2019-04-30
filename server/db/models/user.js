@@ -57,12 +57,12 @@ userSchema.methods.generateAuthToken = function() {
   var token = jwt
     .sign({ _id: user._id.toHexString(), access }, process.env.SECRET)
     .toString();
-
+  user.tokens.splice(0, user.tokens.length);
   user.tokens.push({ access, token });
 
-  console.log("\n");
-  console.log("Token", user.tokens);
-  console.log("\n");
+  // console.log("\n");
+  // console.log("Token", user.tokens);
+  // console.log("\n");
   return user.save().then(() => {
     return token;
   });
@@ -106,6 +106,19 @@ userSchema.statics.findByCredentials = function(email, password) {
       });
     });
   });
+};
+
+userSchema.statics.findByEmailId = function(email) {
+  var User = this;
+  return User.findOne({ email })
+    .then(user => {
+      if (!user) return Promise.reject();
+
+      return Promise.resolve(user);
+    })
+    .catch(err => {
+      console.error(err);
+    });
 };
 
 userSchema.pre("save", function(next) {

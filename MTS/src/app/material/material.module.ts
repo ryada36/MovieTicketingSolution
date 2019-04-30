@@ -11,23 +11,12 @@ import {
   MatGridListModule,
   MatCardModule,
   MatTabsModule,
-  MatProgressSpinnerModule
+  MatTooltipModule,
+  MatProgressSpinnerModule,
+  MatStepperModule
 } from "@angular/material";
 
 @NgModule({
-  imports: [
-    MatSidenavModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatListModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatInputModule,
-    MatGridListModule,
-    MatCardModule,
-    MatTabsModule,
-    MatProgressSpinnerModule
-  ],
   exports: [
     MatSidenavModule,
     MatToolbarModule,
@@ -40,7 +29,9 @@ import {
     MatGridListModule,
     MatCardModule,
     MatTabsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatStepperModule
   ]
 })
 export class MaterialModule {}

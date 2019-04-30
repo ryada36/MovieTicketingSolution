@@ -11,6 +11,7 @@ const initialState = {
   name: "",
   role: "",
   authToken: "",
+  socialToken: "",
   tokens: []
 };
 

@@ -16,12 +16,13 @@ import { UserEffects } from "./../store/effects/userEffect";
 import { MovieEffect } from "./../store/effects/movieEffect";
 import { AdBannerComponent } from "./ad-banner/ad-banner.component";
 import { AdHost } from "./adHost.directive";
+import { ShowEffects } from "../store/effects/showEffects";
 
 @NgModule({
   imports: [
     CommonModule,
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([UserEffects, MovieEffect]),
+    EffectsModule.forRoot([UserEffects, MovieEffect, ShowEffects]),
     HttpClientModule,
     FlexLayoutModule,
     StoreDevtoolsModule.instrument({ maxAge: 10 })

@@ -6,6 +6,14 @@ import { MaterialModule } from "./material/material.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
+import {
+  SocialLoginModule,
+  AuthServiceConfig,
+  GoogleLoginProvider
+  // FacebookLoginProvider,
+  // LinkedinLoginProvider
+} from "angular-6-social-login";
+
 import { AppComponent } from "./app.component";
 
 import { routes } from "./appRoutes";
@@ -53,13 +61,18 @@ import { PaidAdComponent } from "./paid-ad/paid-ad.component";
     }),
     SharedModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    SocialLoginModule
   ],
   providers: [
     {
       provide: "VAPID_PUBLIC_KEY",
       useValue:
         "BK7VdPIvpsDteH-FKOrMGWe3Yp4zWpUFwVMQPweQevIoVZlx1QREo-0pYRYyB3jv1T85mwKJjS7JyNRRb5fSpK8"
+    },
+    {
+      provide: AuthServiceConfig,
+      useFactory: getAuthServiceConfigs
     }
   ],
   entryComponents: [
@@ -71,3 +84,26 @@ import { PaidAdComponent } from "./paid-ad/paid-ad.component";
   bootstrap: [AppComponent]
 })
 export class AppModule {}
+
+// Configs
+export function getAuthServiceConfigs() {
+  let config = new AuthServiceConfig([
+    // {
+    //   id: FacebookLoginProvider.PROVIDER_ID,
+    //   provider: new FacebookLoginProvider("Your-Facebook-app-id")
+    // },
+    {
+      id: GoogleLoginProvider.PROVIDER_ID,
+      provider: new GoogleLoginProvider(
+        "607713332900-93hdkgrl8u1desthbactq5stas05c2k4.apps.googleusercontent.com"
+      )
+    }
+    // {
+    //   id: LinkedinLoginProvider.PROVIDER_ID,
+    //   provider: new LinkedinLoginProvider(
+    //     "1098828800522-m2ig6bieilc3tpqvmlcpdvrpvn86q4ks.apps.googleusercontent.com"
+    //   )
+    // }
+  ]);
+  return config;
+}

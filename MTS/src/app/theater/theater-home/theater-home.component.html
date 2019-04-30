@@ -1,75 +1,59 @@
-<div class="hero_wrapper">
-  
-</div>
-<div class="movie_content_wrapper mat-typography">
+<!-- well bros this is a wrapper if you wanna show the hero banner for movie -->
+<div class="hero_wrapper"></div>
+<!-- this is a content area for you to display theater information-->
+<div
+  class="movie_content_wrapper mat-typography "
+  fxLayout="column"
+  [ngClass.gt-xs]="['container']"
+>
   <div class="booking_meta_wrapper">
     <div class="date_select">
       <ul class="dates">
-        <li>
-          <div class="date" [ngClass]="{'selected':selectedDate==1}" >
-            <div class="day" (click)="displayShows($event)">01</div>
+        <li *ngFor="let showDate of bookingDates">
+          <div
+            class="date"
+            [ngClass]="{ selected: showDate.value == selectedDate }"
+          >
+            <div class="day" (click)="displayShows(showDate.value)">
+              {{ showDate.day }}
+            </div>
             <div class="weakday">
-              TODAY
+              {{ showDate.dayTitle }}
             </div>
           </div>
-        </li>
-        <li>
-            <div class="date " [ngClass]="{'selected':selectedDate==2}" >
-                <div class="day" (click)="displayShows($event)">02</div>
-                <div class="weakday">
-                  TOM
-                </div>
-              </div>
-        </li>
-        <li>
-            <div class="date " [ngClass]="{'selected':selectedDate==3}" >
-                <div class="day" (click)="displayShows($event)">03</div>
-                <div class="weakday">
-                  WED
-                </div>
-              </div>
-        </li>
-        <li>
-            <div class="date " [ngClass]="{'selected':selectedDate==4}" >
-                <div class="day" (click)="displayShows($event)">04</div>
-                <div class="weakday">
-                  THU
-                </div>
-              </div>
         </li>
       </ul>
     </div>
   </div>
+
+  <!-- Display list of shows ordered by theaters -->
   <div class="shows_Wrapper">
-    <div class="theater">
+    <div class="theater" *ngFor="let theater of (shows | keyvalue)">
       <div class="theater_part">
-        <span class="mat-h3">Great India Place</span>
+        <span class="mat-h3">{{ getTheaterName(theater.key) }}</span>
       </div>
       <div class="shows">
         <ul class="showList">
-          <li (click)="showBookingFlow()">
-             <span class="show">5:45 pm</span>   
+          <li
+            (click)="showBookingFlow(indShow)"
+            *ngFor="let indShow of theater.value"
+          >
+            <button
+              mat-raised-button
+              color="accent"
+              matTooltip="Total Seats {{ indShow.totalSeats }} - Price  {{
+                indShow.price
+              }}"
+              matTooltipPosition="above"
+            >
+              <span class="show">{{ getShowTime(indShow.startTime) }}</span>
+            </button>
           </li>
-          <li (click)="showBookingFlow()">
-              <span class="show">9:45 pm</span>   
-           </li>
+          <!-- <li (click)="showBookingFlow()">
+            <span class="show">9:45 pm</span>
+          </li> -->
         </ul>
       </div>
     </div>
-    <div class="theater">
-        <div class="theater_part">
-          <span class="mat-h3">Wave Cinemas</span>
-        </div>
-        <div class="shows">
-          <ul class="showList">
-            <li (click)="showBookingFlow()">
-               <span class="show">5:45 pm</span>   
-            </li>
-            <li (click)="showBookingFlow()">
-                <span class="show">9:45 pm</span>   
-             </li>
-          </ul>
-        </div>
-      </div>
   </div>
 </div>

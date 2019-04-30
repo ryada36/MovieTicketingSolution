@@ -5,6 +5,7 @@
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "/",
+  "gcm_sender_id": "607713332900",
   "start_url": "/",
   "icons": [
     {

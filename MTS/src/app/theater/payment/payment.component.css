@@ -1,0 +1,22 @@
+mat-form-field {
+  margin-right: 20px;
+}
+.payment_wrapper .ticket_preview mat-list-item {
+  font-size: 0.95em;
+}
+.submit_wrapper {
+  margin-top: 40px;
+}
+.ticket_preview {
+  margin-top: 50px;
+}
+.ticket_preview h3 {
+  color: green;
+}
+.status {
+  font-size: 0.8em;
+  margin-top: 10px;
+}
+.status.success {
+  color: green;
+}

@@ -17,6 +17,7 @@ export interface IUser {
   authToken: String;
   tokens: String[];
   role: String;
+  socialToken: String;
 }
 
 export interface IMovie {

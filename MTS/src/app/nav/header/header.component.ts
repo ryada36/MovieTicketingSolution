@@ -4,6 +4,7 @@ import { SigninComponent } from "./../../overlays/signin/signin.component";
 import { IAppState, IUser } from "./../../store/reducers/";
 import { Store } from "@ngrx/store";
 import { logout } from "./../../store/actions/userAction";
+import { AuthService } from "angular-6-social-login";
 
 @Component({
   selector: "app-header",
@@ -14,7 +15,12 @@ export class HeaderComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
   isLoggedIn: Boolean = false;
   currentToken: String;
-  constructor(public dialog: MatDialog, public store: Store<IAppState>) {}
+  isSocialUser: Boolean = false;
+  constructor(
+    public dialog: MatDialog,
+    public store: Store<IAppState>,
+    private socialAuthService: AuthService
+  ) {}
 
   ngOnInit() {
     this.store
@@ -23,6 +29,9 @@ export class HeaderComponent implements OnInit {
         if (user.authToken) {
           this.isLoggedIn = true;
           this.currentToken = user.authToken;
+          if (user.socialToken) {
+            this.isSocialUser = true;
+          }
         } else {
           this.isLoggedIn = false;
           this.currentToken = "";
@@ -45,7 +54,9 @@ export class HeaderComponent implements OnInit {
   };
 
   public logout() {
-    console.log("Log out started");
+    if (this.isSocialUser) {
+      this.socialAuthService.signOut();
+    }
     this.store.dispatch(logout(this.currentToken));
   }
 }

@@ -7,6 +7,7 @@ import { HOST_NAME } from "./endPoints";
 })
 export class LoginService {
   loginEndPoint: string = `${HOST_NAME}/auth/login`;
+  loginSocialEndPoint: string = `${HOST_NAME}/auth/social_login`;
   logoutEndPoint: string = `${HOST_NAME}/auth/me`;
   registerEndPoint: string = `${HOST_NAME}/auth/register`;
   constructor(private http: HttpClient) {}
@@ -18,7 +19,11 @@ export class LoginService {
       { observe: "response" }
     );
   }
-
+  loginSocialUser(user) {
+    return this.http.post(this.loginSocialEndPoint, user, {
+      observe: "response"
+    });
+  }
   register(user) {
     return this.http.post(
       this.registerEndPoint,

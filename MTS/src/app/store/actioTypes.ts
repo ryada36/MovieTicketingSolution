@@ -1,6 +1,7 @@
 /** =================== USER ACTIONS ====================== */
 export const USER_LOGIN_START = "USER_LOGIN_START";
 export const USER_LOGIN = "USER_LOGIN";
+export const USER_SOCIAL_LOGIN = "USER_SOCIAL_LOGIN";
 export const USER_LOGIN_COMPLETE = "USER_LOGIN_COMPLETE";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const USER_LOGOUT_SUCCESSFULL = "USER_LOGOUT_SUCCESSFULL";
@@ -16,5 +17,5 @@ export const FETCH_THEATERS_START = "FETCH_THEATERS_START";
 export const FETCH_THEATERS_SUCCESSFULL = "FETCH_THEATERS_SUCCESSFULL";
 
 /** =================== Show ACTIONS ====================== */
-export const FETCH_SHOWS_START = "FETCH_SHOWS_START";
+export const FETCH_SHOWS = "FETCH_SHOWS";
 export const FETCH_SHOWS_SUCCESSFULL = "FETCH_SHOWS_SUCCESSFULL";
