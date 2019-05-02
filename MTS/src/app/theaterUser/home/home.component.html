@@ -1,0 +1,86 @@
+<div fxLayout fxLayoutAlign="space-around">
+  <form [formGroup]="showFormGroup">
+    <div class="movie-container">
+      <h2 class="mat-h2">Select Movie</h2>
+      <!-- insert drop down populated with the available movies-->
+      <mat-form-field *ngIf="movies">
+        <mat-label>select movie</mat-label>
+        <mat-select formControlName="movieCtrl">
+          <mat-option *ngFor="let movie of movies" [value]="movie._id">
+            {{ movie.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="theaters">
+        <mat-label>Select Theater</mat-label>
+        <mat-select formControlName="theaterCtrl">
+          <mat-option *ngFor="let theater of theaters" [value]="theater._id">
+            {{ theater.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <h2 class="mat-h2">Add Shows</h2>
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="startPicker"
+          placeholder="Show Start Date"
+          autocomplete="off"
+          (dateChange)="startDateChange($event)"
+          formControlName="startDateCtrl"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="startPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="endPicker"
+          placeholder="Show End Date"
+          autocomplete="off"
+          (dateChange)="generateTimeSlots($event)"
+          formControlName="endDateCtrl"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="endPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div
+      class="draggable"
+      fxLayout
+      [style.display]="showDraggable ? 'flex' : 'none'"
+    >
+      <canvas
+        #canvas
+        (drop)="drop($event)"
+        (dragover)="allowDrop($event)"
+      ></canvas>
+      <div class="available-slots-container" fxLayout="column">
+        <!-- this should be filled with time slots-->
+        <div
+          *ngFor="let slot of availableTimeSlots"
+          class="time-slot mat-h3"
+          draggable="true"
+          (dragstart)="drag($event)"
+          [attr.data-slotTime]="slot.value"
+        >
+          {{ slot.title }}
+        </div>
+      </div>
+    </div>
+    <div class="button-container" *ngIf="showDraggable">
+      <button mat-button (click)="reset()">Reset</button>
+      <button mat-raised-button color="primary">Add Shows</button>
+    </div>
+  </form>
+</div>

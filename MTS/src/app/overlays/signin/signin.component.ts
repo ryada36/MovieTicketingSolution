@@ -12,6 +12,7 @@ import { IAppState } from "./../../store/reducers/";
 
 /** ========= user actions ========== */
 import { userLogin, userSocialLogin } from "./../../store/actions/userAction";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-signin",
@@ -22,6 +23,7 @@ export class SigninComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(
+    private router: Router,
     private socialAuthService: AuthService,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<SigninComponent>,
@@ -38,8 +40,11 @@ export class SigninComponent implements OnInit {
     this.store
       .select(state => state.user)
       .subscribe(user => {
-        if (user.authToken) this.dialogRef.close();
-        console.log("User === >", user);
+        if (user.authToken) {
+          this.dialogRef.close();
+          if (user.role == "TheaterUser")
+            this.router.navigateByUrl("secure/dashboard");
+        }
       });
   }
 

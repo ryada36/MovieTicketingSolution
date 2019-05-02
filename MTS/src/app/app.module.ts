@@ -33,6 +33,7 @@ import { RegisterComponent } from "./overlays/register/register.component";
 import { SharedModule } from "./shared/shared.module";
 import { ClientAdComponent } from "./client-ad/client-ad.component";
 import { PaidAdComponent } from "./paid-ad/paid-ad.component";
+import { HomeComponent as TheaterUserHomeComponent } from "./theaterUser/home/home.component";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { PaidAdComponent } from "./paid-ad/paid-ad.component";
     MovieSummaryComponent,
     RegisterComponent,
     ClientAdComponent,
-    PaidAdComponent
+    PaidAdComponent,
+    TheaterUserHomeComponent
   ],
   imports: [
     BrowserModule,

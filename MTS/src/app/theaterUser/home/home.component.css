@@ -1,0 +1,31 @@
+mat-form-field {
+  margin: 20px;
+  margin-top: 0;
+  margin-left: 0;
+}
+.available-slots-container {
+  background-color: beige;
+  width: 150px;
+  justify-content: flex-start;
+}
+canvas {
+  background-color: #d3f2ff;
+}
+.time-slot {
+  margin: 10px;
+  height: 50px;
+  color: white;
+  background-color: mediumaquamarine;
+  cursor: pointer;
+  text-align: center;
+  line-height: 50px;
+  font-size: 0.9em;
+  font-style: italic;
+  font-weight: bold;
+}
+.button-container {
+  margin-top: 30px;
+}
+.button-contianer > button {
+  margin-right: 20px;
+}
