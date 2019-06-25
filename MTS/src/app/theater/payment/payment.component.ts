@@ -52,12 +52,12 @@ export class PaymentComponent implements OnInit {
 
     // create form
     this.firstFormGroup = this._formBuilder.group({
-      emailCtrl: ["abc@test.com", Validators.email],
-      phoneCtrl: ["9716349914", Validators.required]
+      emailCtrl: ["", Validators.email],
+      phoneCtrl: ["", Validators.required]
     });
     this.secondFormGroup = this._formBuilder.group({
-      couponCtrl: ["ACADERTGDGDG", Validators.required],
-      ticketsCountCtrl: ["1", Validators.required]
+      couponCtrl: ["", Validators.required],
+      ticketsCountCtrl: ["", Validators.required]
     });
 
     this.ticketCount = this.secondFormGroup.controls["ticketsCountCtrl"].value;

@@ -1,8 +1,10 @@
 const express = require("express");
+const fs = require("fs");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const webpush = require("web-push");
 const { ObjectID } = require("mongodb");
+const path = require("path");
 const _ = require("lodash");
 
 require("./config");
@@ -14,6 +16,7 @@ const { Theater } = require("./db/models/theaters");
 const { Show } = require("./db/models/show");
 const { Roles } = require("./db/models/roles");
 const { Booking } = require("./db/models/booking");
+const { UserReview } = require("./db/models/userReview");
 
 const {
   NotificationSubscriber
@@ -90,7 +93,7 @@ app.get("/mts/notification/:title", async (req, res) => {
   const allSubscriptions = await NotificationSubscriber.find({});
 
   const option = {
-    proxy: "http://bsez-s400.hclt.corp.hcl.in:8080"
+    // proxy: "http://bsez-s400.hclt.corp.hcl.in:8080"
   };
 
   Promise.all(
@@ -121,7 +124,7 @@ app.get("/mts/notification/:title", async (req, res) => {
 /** ===================== User Authentication Routes ======================= */
 
 //POST /users
-app.post("/auth/register", (req, res) => {
+app.post("/api/auth/register", (req, res) => {
   var body = _.pick(req.body.user, ["email", "password", "name", "role"]);
   if (!body.role) {
     body.role = "User";
@@ -147,12 +150,12 @@ app.post("/auth/register", (req, res) => {
 });
 
 //GET /auth/profile to get user profile
-app.get("/auth/profile", authenticate, (req, res) => {
+app.get("/api/auth/profile", authenticate, (req, res) => {
   res.send(req.user);
 });
 
 //POST /users/login
-app.post("/auth/login", (req, res) => {
+app.post("/api/auth/login", (req, res) => {
   var body = _.pick(req.body, ["email", "password"]);
 
   User.findByCredentials(body.email, body.password)
@@ -169,7 +172,7 @@ app.post("/auth/login", (req, res) => {
 });
 
 //POST /user/login/social
-app.post("/auth/social_login", (req, res) => {
+app.post("/api/auth/social_login", (req, res) => {
   var body = _.pick(req.body, ["email", "name", "id", "token"]);
 
   User.findByEmailId(body.email)
@@ -215,7 +218,7 @@ app.post("/auth/social_login", (req, res) => {
 });
 
 //DELETE /users/me/token
-app.delete("/auth/me/:token", authenticate, (req, res) => {
+app.delete("/api/auth/me/:token", authenticate, (req, res) => {
   req.user
     .removeToken(req.token)
     .then(() => {
@@ -229,7 +232,7 @@ app.delete("/auth/me/:token", authenticate, (req, res) => {
 /** ===========================movie routes ====================== */
 
 // show all the movies released in last weak and movies releasing in next weak
-app.get("/movies", (req, res) => {
+app.get("/api/movies", (req, res) => {
   let date = Date.now();
   let sevenDaysAfter = new Date(date + 7 * 24 * 60 * 60 * 1000);
   console.log("7 days after ", sevenDaysAfter.toDateString());
@@ -246,7 +249,7 @@ app.get("/movies", (req, res) => {
     .catch(e => res.status(500).send(e));
 });
 
-app.get("/movies/:id", (req, res) => {
+app.get("/api/movies/:id", (req, res) => {
   var id = req.params.id;
   Movie.findById(id)
     .then(movie => {
@@ -256,7 +259,7 @@ app.get("/movies/:id", (req, res) => {
 });
 
 // post a movie to your website , would be curatd by admin
-app.post("/movies", authenticate, (req, res) => {
+app.post("/api/movies", authenticate, (req, res) => {
   upload(req, res, function(err) {
     if (req.fileValidationError) {
       // res.status(500).send(err);
@@ -285,7 +288,7 @@ app.post("/movies", authenticate, (req, res) => {
 /** ===========================theater routes ====================== */
 
 //show theaters based on the movie
-app.get("/theaters/:movieName", (req, res) => {
+app.get("/api/theaters/:movieName", (req, res) => {
   let movieName = req.params.movieName;
   Movie.find({ name: movieName })
     .then(movies => {
@@ -317,7 +320,7 @@ app.get("/theaters/:movieName", (req, res) => {
 });
 
 //get all the theaters
-app.get("/theaters", (req, res) => {
+app.get("/api/theaters", (req, res) => {
   Theater.find({})
     .then(theaters => {
       if (!theaters) return res.status(404).end();
@@ -328,7 +331,7 @@ app.get("/theaters", (req, res) => {
 });
 
 // POST to a theater aka adding new theater curated by theater owner
-app.post("/theaters", authenticate, (req, res) => {
+app.post("/api/theaters", authenticate, (req, res) => {
   var userId = req.user._id;
   var body = _.pick(req.body, ["name", "location"]);
   console.log("Registering a new theater", req.body);
@@ -346,7 +349,7 @@ app.post("/theaters", authenticate, (req, res) => {
 /** ===========================Show routes ====================== */
 
 //get shows of a particular movie
-app.get("/shows/:movieId/:date", (req, res) => {
+app.get("/api/shows/:movieId/:date", (req, res) => {
   var movieId = req.params.movieId;
   var date = req.params.date;
   // date need to be in yyyy-MM-dd format
@@ -361,7 +364,7 @@ app.get("/shows/:movieId/:date", (req, res) => {
 });
 
 // get show by id
-app.get("/shows/:showId", (req, res) => {
+app.get("/api/shows/:showId", (req, res) => {
   var showId = req.params.showId;
   Show.findById(showId)
     .then(show => {
@@ -372,7 +375,7 @@ app.get("/shows/:showId", (req, res) => {
 });
 
 // POST adding shows for movie and theater
-app.post("/shows", authenticate, (req, res) => {
+app.post("/api/shows", authenticate, (req, res) => {
   var movieId = req.body.movieId;
   var theaterId = req.body.theaterId;
   var startTime = req.body.startTime;
@@ -398,7 +401,7 @@ app.listen(port, () => {
 });
 
 /** ===========================Payment routes ====================== */
-app.post("/payment", (req, res) => {
+app.post("/api/payment", (req, res) => {
   const body = _.pick(req.body, ["showId", "email", "phone"]);
 
   var booking = new Booking(body);
@@ -424,4 +427,53 @@ app.post("/payment", (req, res) => {
       console.log(err);
       res.status(500).send(err);
     });
+});
+
+/**===================== Review Routes ====================== */
+app.post("/api/reviews/users", authenticate, async (req, res) => {
+  try {
+    var userId = req.user._id;
+    var review = req.body.review;
+    var movieId = req.body.movieId;
+    var user = await User.findById(userId);
+
+    var obj = {
+      review,
+      author: user.name,
+      movieId: movieId,
+      postedTime: new Date()
+    };
+    var userReview = new UserReview(obj);
+    userReview
+      .save()
+      .then(review => {
+        res.send(review);
+      })
+      .catch(err => res.status(400).send(err));
+  } catch (e) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+});
+
+app.get("/api/reviews/users/:movieId", async (req, res) => {
+  try {
+    var movieId = req.params.movieId;
+    var reviews = await UserReview.find({ movieId: movieId }).sort({
+      postedTime: -1
+    });
+    res.send(reviews);
+  } catch (err) {
+    console.log("Error occured ", err);
+    res.status(500).send(err);
+  }
+  var reviews = await UserReview.find({});
+});
+
+app.get("**", (req, res) => {
+  try {
+    res.sendFile("public/index.html", { root: __dirname });
+  } catch (e) {
+    res.sendStatus(500);
+  }
 });

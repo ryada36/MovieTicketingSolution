@@ -44,22 +44,16 @@
   </div>
   <div class="movie_description">
     <!-- may be have tab based on menu from angular material-->
-    <mat-grid-list rowHeight="fit" cols="6" [style.height]="'600px'">
-      <mat-grid-tile [colspan]="1"></mat-grid-tile>
-      <mat-grid-tile [colspan]="4">
-        <mat-tab-group dynamicHeight>
-          <mat-tab label="Summary">
-            <app-movie-summary></app-movie-summary>
-          </mat-tab>
-          <mat-tab label="User Reviews">
-            TODO : Implement reviewing System
-          </mat-tab>
-          <mat-tab label="Critic Reviews">
-            TODO : Implement critic reviews
-          </mat-tab>
-        </mat-tab-group>
-      </mat-grid-tile>
-      <mat-grid-tile [colspan]="1"></mat-grid-tile>
-    </mat-grid-list>
+    <mat-tab-group dynamicHeight>
+      <mat-tab label="Summary">
+        <app-movie-summary></app-movie-summary>
+      </mat-tab>
+      <mat-tab label="User Reviews">
+        <app-user-reviews></app-user-reviews>
+      </mat-tab>
+      <mat-tab label="Critic Reviews">
+        TODO : Implement critic reviews
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>

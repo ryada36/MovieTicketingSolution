@@ -5,6 +5,7 @@ fieldset{
 }
 .rating {
     float:left;
+    padding:0;
 }
 
 .rating:not(:checked) > input {

@@ -1,0 +1,20 @@
+<div class="review_wrapper">
+  <h1 mat-dialog-title>Write Your Review</h1>
+  <div class="review_form">
+    <form [formGroup]="userReviewForm">
+      <mat-form-field>
+        <textarea
+          matInput
+          formControlName="review"
+          rows="5"
+          placeholder="Write  your review heres"
+        ></textarea>
+      </mat-form-field>
+      <div mat-dialog-actions>
+        <button mat-raised-button color="primary" (click)="postReview()">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

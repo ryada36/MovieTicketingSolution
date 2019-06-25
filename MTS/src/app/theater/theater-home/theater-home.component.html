@@ -6,7 +6,7 @@
   fxLayout="column"
   [ngClass.gt-xs]="['container']"
 >
-  <div class="booking_meta_wrapper">
+  <div class="booking_meta_wrapper" *ngIf="bookingDates && bookingDates.length">
     <div class="date_select">
       <ul class="dates">
         <li *ngFor="let showDate of bookingDates">
@@ -17,7 +17,7 @@
             <div class="day" (click)="displayShows(showDate.value)">
               {{ showDate.day }}
             </div>
-            <div class="weakday">
+            <div class="weakday" (click)="displayShows(showDate.value)">
               {{ showDate.dayTitle }}
             </div>
           </div>
@@ -26,9 +26,13 @@
     </div>
   </div>
 
+  <ng-template #noShow>
+    <div class="noshow">No Shows Available! Please check later</div>
+  </ng-template>
+
   <!-- Display list of shows ordered by theaters -->
-  <div class="shows_Wrapper">
-    <div class="theater" *ngFor="let theater of (shows | keyvalue)">
+  <div class="shows_Wrapper" *ngIf="!!shows.size; else noShow">
+    <div class="theater" *ngFor="let theater of shows | keyvalue">
       <div class="theater_part">
         <span class="mat-h3">{{ getTheaterName(theater.key) }}</span>
       </div>

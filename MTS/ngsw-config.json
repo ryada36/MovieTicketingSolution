@@ -14,7 +14,11 @@
       "updateMode": "prefetch",
       "resources": {
         "files": ["/assets/**"],
-        "urls": ["http://localhost:3200/*.jpg"]
+        "urls": [
+          "http://localhost:3200/*.jpg",
+          "https://monti.herokuapp.com",
+          "http://monti.herokuapp.com"
+        ]
       }
     }
   ],

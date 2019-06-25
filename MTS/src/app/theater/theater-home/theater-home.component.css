@@ -1,6 +1,13 @@
 .movie_content_wrapper {
   margin: 0 -10px;
 }
+.noshow {
+  text-align: center;
+  margin-top: 32px;
+  font-weight: bold;
+  font-style: italic;
+  font-family: cursive;
+}
 
 .booking_meta_wrapper {
   display: flex;

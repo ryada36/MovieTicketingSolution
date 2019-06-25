@@ -9,10 +9,15 @@
       <img src="/assets/mts.png" alt="" />
     </a>
   </div>
-  <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+  <div fxFlex fxLayout fxLayoutAlign="end">
     <ul fxLayout fxLayoutGap="15px" class="navigation-items">
       <li *ngIf="!isLoggedIn">
         <button mat-button (click)="openSignInModal()">Sign In</button>
+      </li>
+      <li *ngIf="isLoggedIn">
+        <a [routerLink]="'/secure/dashboard'" style="vertical-align: sub"
+          >Dashboard</a
+        >
       </li>
       <li *ngIf="isLoggedIn">
         <button mat-button (click)="logout()">Log Out</button>

@@ -1,0 +1,9 @@
+.input {
+  height: 250px;
+  padding: 20px;
+  overflow-y: scroll;
+}
+mat-form-field {
+  width: 100vw;
+  max-width: 100%;
+}

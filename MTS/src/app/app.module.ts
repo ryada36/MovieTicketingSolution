@@ -34,6 +34,8 @@ import { SharedModule } from "./shared/shared.module";
 import { ClientAdComponent } from "./client-ad/client-ad.component";
 import { PaidAdComponent } from "./paid-ad/paid-ad.component";
 import { HomeComponent as TheaterUserHomeComponent } from "./theaterUser/home/home.component";
+import { UserReviewsComponent } from "./movies/user-reviews/user-reviews.component";
+import { UserReviewComponent } from "./overlays/user-review/user-review.component";
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { HomeComponent as TheaterUserHomeComponent } from "./theaterUser/home/ho
     RegisterComponent,
     ClientAdComponent,
     PaidAdComponent,
-    TheaterUserHomeComponent
+    TheaterUserHomeComponent,
+    UserReviewsComponent,
+    UserReviewComponent
   ],
   imports: [
     BrowserModule,
@@ -81,6 +85,7 @@ import { HomeComponent as TheaterUserHomeComponent } from "./theaterUser/home/ho
     SigninComponent,
     RegisterComponent,
     ClientAdComponent,
+    UserReviewComponent,
     PaidAdComponent
   ],
   bootstrap: [AppComponent]

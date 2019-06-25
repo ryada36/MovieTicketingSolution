@@ -1,8 +1,8 @@
 .hero_banner {
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   background-position: 50%, 50%;
-  height: 360px;
+  height: 235px;
   margin: 0 -10px;
   margin-top: -10px;
   color: rgba(255, 255, 255, 0.9);

@@ -6,14 +6,11 @@ import { HOST_NAME } from "./endPoints";
   providedIn: "root"
 })
 export class ShowsService {
-  getShowsEndPoint = `${HOST_NAME}/shows`;
+  getShowsEndPoint = `${HOST_NAME}/api/shows`;
 
-  constructor(private http: HttpClient) {
-    console.log("what the hell");
-  }
+  constructor(private http: HttpClient) {}
 
   fetchShows({ movieId, selectedDate }) {
-    console.log("fetching shows ", movieId);
     return this.http.get(`${this.getShowsEndPoint}/${movieId}/${selectedDate}`);
   }
   fetchShowById(showId) {

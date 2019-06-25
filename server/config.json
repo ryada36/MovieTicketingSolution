@@ -3,8 +3,12 @@
     "MONGODB_URI": "mongodb://root:root123@ds239797.mlab.com:39797/mts",
     "SECRET": "secrethere"
   },
+  "production": {
+    "MONGODB_URI": "mongodb://root:root123@ds239797.mlab.com:39797/mts",
+    "SECRET": "secrethere"
+  },
   "test": {
-    "MONGODB_URI": "mongodb://localhost:27017/mts",
+    "MONGODB_URI": "mongodb://root:root123@ds239797.mlab.com:39797/mts",
     "SECRET": "secrethere"
   }
 }

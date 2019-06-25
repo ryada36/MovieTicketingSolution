@@ -1,0 +1,36 @@
+<div class="reviews_container">
+  <!-- some holder to add a new review -->
+  <div class="add_review">
+    <button mat-icon-button color="primary" (click)="openReviewModel($event)">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <!--  reviews needs to be sorted by time latest first -->
+  <div class="reviews">
+    <!-- iterate and show indivisual reviews -->
+    <ng-container *ngIf="!reviews || !reviews.length">
+      <h4 class=".mat-h4">Be the first one to write a review</h4>
+    </ng-container>
+    <ng-container *ngIf="reviews && reviews.length">
+      <mat-card class="review" *ngFor="let review of reviews">
+        <mat-card-header class="review-user-title">
+          <mat-card-title>{{ review.author }}</mat-card-title>
+          <mat-card-subtitle>{{ review.postedTime }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="review_content">
+            {{ review.review }}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <!-- <span class="like_count" class="display-mat">
+            4
+          </span> -->
+          <button mat-icon-button color="warn">
+            <mat-icon>favorite</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </ng-container>
+  </div>
+</div>

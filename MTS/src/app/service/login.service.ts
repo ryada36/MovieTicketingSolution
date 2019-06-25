@@ -6,10 +6,10 @@ import { HOST_NAME } from "./endPoints";
   providedIn: "root"
 })
 export class LoginService {
-  loginEndPoint: string = `${HOST_NAME}/auth/login`;
-  loginSocialEndPoint: string = `${HOST_NAME}/auth/social_login`;
-  logoutEndPoint: string = `${HOST_NAME}/auth/me`;
-  registerEndPoint: string = `${HOST_NAME}/auth/register`;
+  loginEndPoint: string = `${HOST_NAME}/api/auth/login`;
+  loginSocialEndPoint: string = `${HOST_NAME}/api/auth/social_login`;
+  logoutEndPoint: string = `${HOST_NAME}/api/auth/me`;
+  registerEndPoint: string = `${HOST_NAME}/api/auth/register`;
   constructor(private http: HttpClient) {}
 
   login(email, password) {

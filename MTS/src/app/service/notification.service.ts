@@ -6,7 +6,7 @@ import { HOST_NAME } from "./endPoints";
   providedIn: "root"
 })
 export class NotificationService {
-  subscriptionRegistrationEndPoint: string = `${HOST_NAME}/mts/subscriber`;
+  subscriptionRegistrationEndPoint: string = `${HOST_NAME}/api/mts/subscriber`;
 
   constructor(private http: HttpClient) {}
 

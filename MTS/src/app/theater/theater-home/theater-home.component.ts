@@ -107,7 +107,9 @@ export class TheaterHomeComponent implements OnInit {
 
   getShowTime(timeString) {
     const date = new Date(timeString);
-    return `${date.getHours()}:${date.getMinutes()}`;
+    return `${date.getHours()}:${
+      date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
+    }`;
   }
 
   displayShows(dateValue) {

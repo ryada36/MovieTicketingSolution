@@ -6,7 +6,7 @@ import { HOST_NAME } from "./endPoints";
   providedIn: "root"
 })
 export class MoviesService {
-  getMoviesEndPoint: string = `${HOST_NAME}/movies`;
+  getMoviesEndPoint: string = `${HOST_NAME}/api/movies`;
 
   constructor(private http: HttpClient) {}
 

@@ -7,7 +7,7 @@ import { from } from "rxjs";
   providedIn: "root"
 })
 export class BookingService {
-  bookingEndPoint = `${HOST_NAME}/payment`;
+  bookingEndPoint = `${HOST_NAME}/api/payment`;
 
   constructor(private http: HttpClient) {}
 

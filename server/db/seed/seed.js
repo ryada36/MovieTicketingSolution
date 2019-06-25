@@ -38,15 +38,15 @@ const movie = {
   description:
     "Set in the 19th century, Kesari recounts the story of Havildar Ishar SIngh who played a key role in the 1897 Battle of Saragarhi, in which an army of 21 Sikhs fought against a legion of Afghans in what is considered as one of the greatest last-stands in military history.",
   duration: "2hr, 30min",
-  image: "/assets/poster.png",
-  releaseDate: new Date("2019-04-10")
+  image: "/assets/kesari.png",
+  releaseDate: new Date("2019-06-22")
 };
 
 const show = {
   _id: showId,
   movieId: movieId,
   theaterId: theaterId,
-  startTime: new Date("2019-04-10T14:30:00+05:30"),
+  startTime: new Date("2019-06-22T14:30:00+05:30"),
   price: 200,
   totalSeats: 100
 };
